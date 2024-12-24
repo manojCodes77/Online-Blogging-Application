@@ -2,6 +2,7 @@ import React from "react";
 import { Post } from "../types/Post";
 import Avatar from "react-avatar"; // Import the Avatar component
 import { Link, useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
 import axios from "axios";
 
 // Utility function to calculate time elapsed
@@ -72,9 +73,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
         {unique && (
           <button
             onClick={handleDelete}
-            className="text-red-500 hover:text-red-700 font-semibold text-sm"
+            className="text-red-500 hover:text-red-700 font-semibold text-xl"
           >
-            Delete
+            <MdDelete />
           </button>
         )}
       </div>

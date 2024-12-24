@@ -4,6 +4,7 @@ import { useBlog } from '../types/Post';
 import Avatar from 'react-avatar';
 import Loader from '../components/Loader';
 import axios from 'axios';
+import { MdDelete } from 'react-icons/md';
 
 interface Author {
     name: string | null;
@@ -108,9 +109,9 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; }
                     <p>Post ID: {post.id}</p>
                         <button
                             onClick={handleDelete}
-                            className="text-red-500 hover:text-red-700 font-semibold text-sm"
+                            className="text-red-500 hover:text-red-700 font-semibold text-xl"
                         >
-                            Delete
+                            <MdDelete/>
                         </button>
                 </div>
             </CardFooter>
