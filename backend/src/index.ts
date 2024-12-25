@@ -12,7 +12,7 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.use(
   cors({
-    origin: "http://localhost:5173/",
+    origin: "https://manojcodes77.github.io/online-blogging-app-deploy/",
     allowMethods: ["GET", "POST","PUT","DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })
