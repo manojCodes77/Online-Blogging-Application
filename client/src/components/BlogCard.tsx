@@ -34,6 +34,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
     .join("");
 
   const navigate = useNavigate(); // To navigate to the post's detail page
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
 
   const handleDelete = async () => {
     const token = localStorage.getItem("authToken");
@@ -44,7 +45,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
     }
 
     try {
-      await axios.delete(`http://127.0.0.1:8787/api/v1/post/delete/${post.id}`, {
+      await axios.delete(`${BACKEND_URL}/${post.id}`, {
         headers: {
           Authorization: token, // Send JWT token for authorization
         },

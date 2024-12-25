@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SigninInput } from "@manojcodes77/medium-common";
 
 const Signin: React.FC = () => {
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
   const navigate = useNavigate();
   const [formData, setFormData] = useState<SigninInput>({
     email: "",
@@ -22,7 +23,7 @@ const Signin: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("http://localhost:8787/api/v1/user/signin", {
+      const response = await fetch(`${BACKEND_URL}/api/v1/user/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

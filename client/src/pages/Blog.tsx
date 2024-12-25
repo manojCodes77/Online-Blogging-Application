@@ -61,6 +61,8 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; }
         }).format(createdDate);
     };
 
+    const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+
     const handleDelete = async () => {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -69,7 +71,7 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; }
         }
 
         try {
-            await axios.delete(`http://127.0.0.1:8787/api/v1/post/delete/${post.id}`, {
+            await axios.delete(`${BACKEND_URL}/${post.id}`, {
                 headers: {
                     Authorization: token,
                 },

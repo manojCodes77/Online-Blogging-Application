@@ -19,9 +19,11 @@ export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
     const [post, setPost] = useState<Post | null>(null);
 
+    const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+
     useEffect(() => {
         axios
-            .get(`http://localhost:8787/api/v1/post/${id}`, {
+            .get(`${BACKEND_URL}/api/v1/post/${id}`, {
                 headers: {
                     Authorization: localStorage.getItem('authToken') || '',
                 },
@@ -39,7 +41,7 @@ export const useBlog = ({ id }: { id: string }) => {
 
     const deletePost = async (): Promise<void> => {
         try {
-            await axios.delete(`http://localhost:8787/api/v1/post/delete/${id}`, {
+            await axios.delete(`${BACKEND_URL}/${id}`, {
                 headers: {
                     Authorization: localStorage.getItem('authToken') || '',
                 },

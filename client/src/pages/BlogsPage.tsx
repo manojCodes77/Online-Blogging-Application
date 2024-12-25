@@ -15,6 +15,8 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [error, setError] = useState<string | null>(null); // Error state
 
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
@@ -29,8 +31,8 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
 
         // Conditional server URL based on the `unique` prop
         const serverUrl = unique
-          ? "http://127.0.0.1:8787/api/v1/post/bulk"
-          : "http://127.0.0.1:8787/api/v1/post/AllPosts";
+          ? `${BACKEND_URL}/api/v1/post/bulk`
+          : `${BACKEND_URL}/api/v1/post/AllPosts`;
 
         // Make an authorized request
         const response = await axios.get(serverUrl, {

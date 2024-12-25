@@ -21,10 +21,11 @@ const Publish: React.FC = () => {
       content,
     
     };
+    const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
 
     try {
       // Make the POST request to the backend
-      const response = await fetch('http://127.0.0.1:8787/api/v1/post/', {
+      const response = await fetch(`${BACKEND_URL}/api/v1/post/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

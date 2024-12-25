@@ -16,6 +16,7 @@ const Signup: React.FC = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const Signup: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("http://localhost:8787/api/v1/user/signup", {
+      const response = await fetch(`${BACKEND_URL}/api/v1/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
