@@ -45,7 +45,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
     }
 
     try {
-      await axios.delete(`${BACKEND_URL}/${post.id}`, {
+      await axios.delete(`${BACKEND_URL}/api/v1/post/delete/${post.id}`, {
         headers: {
           Authorization: token, // Send JWT token for authorization
         },

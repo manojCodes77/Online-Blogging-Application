@@ -12,7 +12,11 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.use(
   cors({
-    origin: "https://manojcodes77.github.io/",
+    origin: [
+      "https://manojcodes77.github.io",
+      "http://localhost:3000",
+      "http://localhost:5173",
+    ],
     allowMethods: ["GET", "POST","PUT","DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })
