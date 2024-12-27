@@ -27,7 +27,8 @@ model Post {
 
 model Otp{
   id String @id @default(uuid())
-  email String
+  email String @unique
   otp String
   createdAt DateTime @default(now())
+  attempts Int @default(3)
 }

@@ -6,6 +6,7 @@ exports.signupInput = zod_1.z.object({
     name: zod_1.z.string().min(3).max(255),
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(6).max(255),
+    otp: zod_1.z.string().length(6),
 });
 exports.signinInput = zod_1.z.object({
     email: zod_1.z.string().email(),

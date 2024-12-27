@@ -3,14 +3,17 @@ export declare const signupInput: z.ZodObject<{
     name: z.ZodString;
     email: z.ZodString;
     password: z.ZodString;
+    otp: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     name: string;
     email: string;
     password: string;
+    otp: string;
 }, {
     name: string;
     email: string;
     password: string;
+    otp: string;
 }>;
 export type SignupInput = z.infer<typeof signupInput>;
 export declare const signinInput: z.ZodObject<{

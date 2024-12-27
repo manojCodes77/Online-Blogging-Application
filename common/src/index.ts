@@ -4,6 +4,7 @@ export const signupInput=z.object({
     name:z.string().min(3).max(255),
     email:z.string().email(),
     password:z.string().min(6).max(255),
+    otp:z.string().length(6),
 })
 
 export type SignupInput=z.infer<typeof signupInput>;
