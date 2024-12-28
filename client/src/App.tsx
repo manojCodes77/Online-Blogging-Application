@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import BlogsPage from './pages/BlogsPage'
 import Blog from './pages/Blog'
 import Publish from './pages/Publish'
+import SendOTP from './components/SendOTP'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <div className='flex flex-col min-h-screen bg-gray-100 justify-between'>
         <Header />
         <Routes>
+          <Route path='/send-otp' element={<SendOTP />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/blogs" element={<BlogsPage unique={false} />} />

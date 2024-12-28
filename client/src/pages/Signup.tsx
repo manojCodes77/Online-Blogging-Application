@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { SignupInput } from "@manojcodes77/medium-common";
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<SignupInput>({
     name: "",
     email: "",
     password: "",
+    otp: "",
   });
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -16,7 +16,7 @@ const Signup: React.FC = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,23 +24,14 @@ const Signup: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/v1/user/signup`, {
+      await fetch(`${BACKEND_URL}/api/v1/user/send-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (data.jwt) {
-        // Store the JWT in localStorage
-        localStorage.setItem("authToken", data.jwt);
-        alert("Signup successful! JWT token stored.");
-        navigate("/blogs");
-      } else {
-        throw new Error(data.message || "Unexpected error");
-      }
+        body: JSON.stringify({ email: formData.email }),
+      })
+      redirect('/signup')
     } catch (error: any) {
       setError(error.message);
     }
