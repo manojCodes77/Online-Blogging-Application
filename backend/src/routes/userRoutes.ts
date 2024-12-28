@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import {  sendOtp, signin, signup } from "../controllers/userControllers";
+import {  cleanupOtps, sendOtp, signin, signup } from "../controllers/userControllers";
 
 interface Env {
     DATABASE_URL: string,
@@ -9,6 +9,8 @@ interface Env {
 const userRouter = new Hono<{
     Bindings: Env
 }>();
+
+userRouter.post("/cleanUpOtps", cleanupOtps);
 
 userRouter.post("/send-otp", sendOtp);
 
