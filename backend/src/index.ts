@@ -14,6 +14,7 @@ app.use(
   cors({
     origin: [
       "https://manojcodes77.github.io",
+      "http://manojcodes77.me",
       "http://localhost:3000",
       "http://localhost:5173",
     ],
