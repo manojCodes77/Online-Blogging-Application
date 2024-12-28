@@ -41,7 +41,7 @@ const Badge: React.FC<{ variant: string; children: React.ReactNode }> = ({ varia
     </span>
 );
 
-const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; }> = ({ post, onDelete }) => {
+const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; unique:boolean }> = ({ post, onDelete,unique }) => {
     const formatTimeOrDate = (createdAt: string): string => {
         const createdDate = new Date(createdAt);
         const now = new Date();
@@ -109,19 +109,25 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; }
             <CardFooter className="text-sm text-gray-500">
                 <div className="flex justify-between items-center">
                     <p>Post ID: {post.id}</p>
+                    {unique &&
                         <button
                             onClick={handleDelete}
                             className="text-red-500 hover:text-red-700 font-semibold text-xl"
                         >
                             <MdDelete/>
                         </button>
+                    }
                 </div>
             </CardFooter>
         </Card>
     );
 };
 
-const Blog: React.FC = () => {
+interface BlogProps {
+    unique: boolean;
+}
+
+const Blog: React.FC<BlogProps> = ({unique}) => {
     const { id } = useParams<{ id: string }>();
     const { loading, post, deletePost } = useBlog({ id: id! });
 
@@ -141,7 +147,7 @@ const Blog: React.FC = () => {
         );
 
     return post ? (
-        <BlogPostView post={post} onDelete={handleDelete} />
+        <BlogPostView post={post} onDelete={handleDelete} unique={unique} />
     ) : (
         <div>Post not found</div>
     );

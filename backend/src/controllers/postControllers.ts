@@ -5,7 +5,7 @@ import { verify } from "hono/jwt";
 import { createPostInput, updatePostInput } from "@manojcodes77/medium-common";
 
 
-export const auth=async (c: Context, next:Next) => {
+export const auth = async (c: Context, next: Next) => {
     try {
         const authHeader = c.req.header("Authorization") || "";
         const user = await verify(authHeader, c.env.JWT_SECRET);
@@ -20,9 +20,9 @@ export const auth=async (c: Context, next:Next) => {
 export const createPost = async (c: Context) => {
     try {
         const body = await c.req.json();
-        const {success}=createPostInput.safeParse(body);
-        if(!success){
-            return c.json({message:"Invalid input"},400);
+        const { success } = createPostInput.safeParse(body);
+        if (!success) {
+            return c.json({ message: "Invalid input" }, 400);
         }
         const authorId = c.get("authorId");
         const prisma = new PrismaClient({
@@ -103,9 +103,9 @@ export const deleteMyAllPosts = async (c: Context) => {
 export const updatePost = async (c: Context) => {
     try {
         const body = await c.req.json();
-        const {success}=updatePostInput.safeParse(body);
-        if(!success){
-            return c.json({message:"Invalid input"},400);
+        const { success } = updatePostInput.safeParse(body);
+        if (!success) {
+            return c.json({ message: "Invalid input" }, 400);
         }
         const authorId = c.get("authorId");
         const prisma = new PrismaClient({
@@ -120,7 +120,7 @@ export const updatePost = async (c: Context) => {
             data: {
                 title: body.title,
                 content: body.content,
-                createdAt:new Date()
+                createdAt: new Date()
             }
         });
 
@@ -136,7 +136,7 @@ export const updatePost = async (c: Context) => {
     }
 }
 
-export const getPostById=async (c: Context) => {
+export const getPostById = async (c: Context) => {
     const id = c.req.param('id');
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -147,17 +147,17 @@ export const getPostById=async (c: Context) => {
             where: {
                 id
             },
-            select:{
-                title:true,
-                content:true,
-                author:{
-                    select:{
-                        name:true
+            select: {
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
                     }
                 },
-                id:true,
-                published:true,
-                createdAt:true
+                id: true,
+                published: true,
+                createdAt: true
             }
         })
         return c.json({
@@ -183,16 +183,16 @@ export const getAllPosts = async (c: Context) => {
             where: {
                 authorId
             },
-            select:{
-                content:true,
-                title:true,
-                id:true,
-                author:{
-                    select:{
-                        name:true,
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                author: {
+                    select: {
+                        name: true,
                     }
                 },
-                createdAt:true,
+                createdAt: true,
             }
         });
 
@@ -215,23 +215,29 @@ export const getAllPosts = async (c: Context) => {
     }
 };
 
-export const AllPosts=async (c: Context) => {
+export const AllPosts = async (c: Context) => {
+    const authorId = c.get("authorId");
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
         const posts = await prisma.post.findMany({
-            select:{
-                content:true,
-                title:true,
-                id:true,
-                author:{
-                    select:{
-                        name:true,
+            where: {
+                NOT: {
+                    authorId: authorId
+                }
+            },
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                author: {
+                    select: {
+                        name: true,
                     }
                 },
-                createdAt:true,
+                createdAt: true,
             }
         });
 

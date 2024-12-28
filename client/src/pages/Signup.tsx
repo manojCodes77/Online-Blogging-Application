@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@manojcodes77/medium-common";
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<SignupInput>({
     name: "",
     email: "",
@@ -24,14 +25,22 @@ const Signup: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      await fetch(`${BACKEND_URL}/api/v1/user/send-otp`, {
+      const response=await fetch(`${BACKEND_URL}/api/v1/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: formData.email }),
-      })
-      redirect('/signup')
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.jwt) {
+        // Store the JWT in localStorage
+        localStorage.setItem("authToken", data.jwt);
+        navigate("/blogs");
+        alert("Login successful! JWT token stored.");
+      } else {
+        throw new Error(data.message || "Unexpected error");
+      }
     } catch (error: any) {
       setError(error.message);
     }
@@ -79,6 +88,18 @@ const Signup: React.FC = () => {
                 name="email"
                 placeholder="m@example.com"
                 value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">OTP</label>
+              <input
+                type="text"
+                name="otp"
+                placeholder="Enter OTP"
+                value={formData.otp}
                 onChange={handleChange}
                 className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required

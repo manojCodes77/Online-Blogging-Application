@@ -20,10 +20,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/blogs" element={<BlogsPage unique={false} />} />
-          <Route path="/blog/:id" element={<Blog   />} />
+          <Route path="/blog/:id" element={<Blog unique={true}  />} />
+          <Route path='/others-blog/:id' element={<Blog unique={false} />} />
           <Route path='/publish' element={<Publish />} />
           <Route path='/my-posts' element={<BlogsPage unique={true} />} />
-          <Route path="*" element={<Navigate to="/signup" replace />} />
+          <Route path="*" element={<Navigate to="/send-otp" replace />} />
         </Routes>
         <Footer />
         </div>

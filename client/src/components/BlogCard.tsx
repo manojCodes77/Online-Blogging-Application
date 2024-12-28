@@ -34,7 +34,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
     .join("");
 
   const navigate = useNavigate(); // To navigate to the post's detail page
-  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
   const handleDelete = async () => {
     const token = localStorage.getItem("authToken");
@@ -85,13 +85,21 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDelete, unique }) => {
       </p>
       <p className="text-sm text-gray-400 mt-4">By {authorName}</p>
       <p className="text-xs text-gray-500 mt-1">Created {timeElapsed(post.createdAt)}</p>
-
-      <Link
-        to={`/blog/${post.id}`}
-        className="text-blue-500 hover:underline mt-2 block text-sm"
-      >
-        Read more
-      </Link>
+      {unique && (
+        <Link
+          to={`/blog/${post.id}`}
+          className="text-blue-500 hover:underline mt-2 block text-sm"
+        >
+          Read more
+        </Link>)}
+      {!unique && (
+        <Link
+          to={`/others-blog/${post.id}`}
+          className="text-blue-500 hover:underline mt-2 block text-sm"
+        >
+          Read more
+        </Link>
+      )}
     </div>
   );
 };

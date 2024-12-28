@@ -11,7 +11,7 @@ const Header: React.FC = () => {
 
         <nav className="hidden md:flex space-x-6 text-gray-600">
           <Link to="/my-posts" className="hover:text-black">
-            Our story
+            Our stories
           </Link>
           <Link to="/blogs" className="hover:text-black">
             All Blogs
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
         </nav>
 
         <div>
-          <Link to="/signup" className="bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition">
+          <Link to="/send-otp" className="bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition">
             Get started
           </Link>
         </div>

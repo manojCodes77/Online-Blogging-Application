@@ -24,7 +24,9 @@ const SendOTP = () => {
             const data = await response.json();
             if (data.message) {
                 alert(data.message);
+                window.location.href = '/signup';
             } else {
+                setEmail('');
                 throw new Error(data.message || "Unexpected error");
             }
         } catch (error: any) {
