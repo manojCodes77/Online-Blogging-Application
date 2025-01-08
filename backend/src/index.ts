@@ -17,7 +17,7 @@ app.use(
       "http://manojcodes77.me",
       "http://localhost:3000",
       "http://localhost:5173",
-      "https://online-blogging-app-frontend-5rabtvemt.vercel.app/",
+      "https://online-blogging-application.vercel.app/"
     ],
     allowMethods: ["GET", "POST","PUT","DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
