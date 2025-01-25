@@ -4,6 +4,7 @@ import BlogCard from "../components/BlogCard";
 import { Post } from "../types/Post";
 import Loader from "../components/Loader";
 import ErrorPage from "../components/ErrorPage";
+import { Link, Outlet } from "react-router-dom";
 
 // Define the props type
 interface BlogsPageProps {
@@ -15,7 +16,7 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [error, setError] = useState<string | null>(null); // Error state
 
-  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -71,13 +72,22 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
 
   if (error) {
     return (
-      <ErrorPage/>
+      <ErrorPage />
     );
   }
 
   return (
     <div className="container mx-auto p-4 flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-bold mb-6 text-center">Blogs</h1>
+      <div className="w-full flex flex-row justify-around mb-8">
+        <h1 className="text-3xl font-bold mb-4 text-center text-blue-600">Blogs</h1>
+        {unique ? (
+          <Link to="/my-posts/publish" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 mb-4">
+        Write
+          </Link>
+        ) : (
+          null
+        )}
+      </div>
       {posts.length > 0 ? (
         posts.map((post) => (
           <BlogCard key={post.id} post={post} onDelete={handlePostDelete} unique={unique} />
@@ -85,6 +95,7 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
       ) : (
         <p className="text-center text-gray-500">No blogs available.</p>
       )}
+      <Outlet />
     </div>
   );
 };

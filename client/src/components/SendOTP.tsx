@@ -1,9 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SendOTP = () => {
-    const [email, setEmail] = React.useState('');
-    const [error, setError] = React.useState<string | null>(null);
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
@@ -24,7 +26,7 @@ const SendOTP = () => {
             const data = await response.json();
             if (data.message) {
                 alert(data.message);
-                window.location.href = '/signup';
+                window.location.href = '/signup'; // Redirect user after sending OTP
             } else {
                 setEmail('');
                 throw new Error(data.message || "Unexpected error");
@@ -33,6 +35,21 @@ const SendOTP = () => {
             setError(error.message);
         }
     };
+
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken"); // Replace "authToken" with the actual key you're using
+        if (token) {
+            setIsAuthenticated(true);
+            navigate('/my-posts'); // Redirect if already authenticated
+        }
+    }, [navigate]); // Dependency array ensures navigation happens once on mount
+
+    if (isAuthenticated) {
+        return null; // While navigating, return null so that nothing is rendered
+    }
+
     return (
         <div className="my-auto flex items-center justify-center bg-gray-100 mx-5">
             <div className="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden justify-center">
@@ -86,7 +103,7 @@ const SendOTP = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SendOTP
+export default SendOTP;
