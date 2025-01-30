@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import SubmitButton from './SubmitButton';
 
 const SendOTP = () => {
     const [email, setEmail] = useState('');
@@ -80,12 +81,7 @@ const SendOTP = () => {
                                 required
                             />
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300"
-                        >
-                            Send OTP
-                        </button>
+                        <SubmitButton onSubmit={handleSubmit}>Send OTP</SubmitButton>
                     </form>
                 </div>
 

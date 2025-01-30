@@ -8,7 +8,7 @@ const Modal: React.FC<ModalProps> = ({ children }) => {
   const navigate = useNavigate();
 
   const closeHandler = () => {
-    navigate('/my-posts'); // Dynamically go back to the parent route
+    navigate('..'); // Dynamically go back to the parent route
   };
 
   return (

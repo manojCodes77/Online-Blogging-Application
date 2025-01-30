@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SigninInput } from "@manojcodes77/medium-common";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import SubmitButton from '../components/SubmitButton';
+import { SigninInput } from '@manojcodes77/medium-common';
 
 const Signin: React.FC = () => {
-  const BACKEND_URL=import.meta.env.VITE_BACKEND_URL as string;
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
   const navigate = useNavigate();
   const [formData, setFormData] = useState<SigninInput>({
     email: "",
@@ -53,7 +54,7 @@ const Signin: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-800">Log In to your Account</h1>
           <p className="mt-2 text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-500 hover:underline">
+            <Link to="/" className="text-blue-500 hover:underline">
               Signup
             </Link>
           </p>
@@ -92,12 +93,7 @@ const Signin: React.FC = () => {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300"
-            >
-              Sign In
-            </button>
+            <SubmitButton onSubmit={handleSubmit}>Sign In</SubmitButton>
           </form>
         </div>
 
@@ -119,4 +115,3 @@ const Signin: React.FC = () => {
 };
 
 export default Signin;
-

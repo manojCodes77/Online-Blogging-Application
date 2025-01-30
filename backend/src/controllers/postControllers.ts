@@ -12,7 +12,6 @@ export const auth = async (c: Context, next: Next) => {
         c.set("authorId", user.id);
         await next();
     } catch (error) {
-        // console.log(error);
         return c.json({ message: "Unauthorized" }, 401);
     }
 }

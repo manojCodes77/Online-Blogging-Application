@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@manojcodes77/medium-common";
+import SubmitButton from "../components/SubmitButton";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -117,12 +118,7 @@ const Signup: React.FC = () => {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300"
-            >
-              Sign Up
-            </button>
+            <SubmitButton onSubmit={handleSubmit}>Sign Up</SubmitButton>
           </form>
         </div>
 
