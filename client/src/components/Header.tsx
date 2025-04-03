@@ -24,6 +24,9 @@ const Header: React.FC = () => {
               <Link to="/my-posts" className="text-gray-600 hover:text-gray-800">
                 My Posts
               </Link>
+              <Link to="/blogs" className="text-gray-600 hover:text-gray-800">
+                All Posts
+              </Link>
               <Link to="/my-posts/publish" className="text-gray-600 hover:text-gray-800">
                 Write
               </Link>
