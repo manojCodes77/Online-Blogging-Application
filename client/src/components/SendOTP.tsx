@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SubmitButton from './SubmitButton';
+import toast from 'react-hot-toast';
 
 const SendOTP = () => {
     const [email, setEmail] = useState('');
@@ -26,29 +27,30 @@ const SendOTP = () => {
 
             const data = await response.json();
             if (data.message) {
-                alert(data.message);
-                window.location.href = '/signup'; // Redirect user after sending OTP
+                toast.success(data.message);
+                navigate('/signup');
             } else {
                 setEmail('');
                 throw new Error(data.message || "Unexpected error");
             }
         } catch (error: any) {
             setError(error.message);
+            toast.error(error.message);
         }
     };
 
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken"); // Replace "authToken" with the actual key you're using
+        const token = localStorage.getItem("authToken");
         if (token) {
             setIsAuthenticated(true);
-            navigate('/my-posts'); // Redirect if already authenticated
+            navigate('/my-posts');
         }
-    }, [navigate]); // Dependency array ensures navigation happens once on mount
+    }, [navigate]);
 
     if (isAuthenticated) {
-        return null; // While navigating, return null so that nothing is rendered
+        return null;
     }
 
     return (
@@ -65,10 +67,6 @@ const SendOTP = () => {
                     </p>
 
                     <form className="mt-4" onSubmit={handleSubmit}>
-                        {error && (
-                            <div className="mb-4 text-sm text-red-500">{error}</div>
-                        )}
-
                         <div className="mb-4">
                             <label className="block text-gray-700">Email</label>
                             <input
@@ -88,8 +86,8 @@ const SendOTP = () => {
                 {/* Right: Quote */}
                 <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-8">
                     <blockquote className="text-lg italic text-gray-600 text-center">
-                        “The customer service I received was exceptional. The support team
-                        went above and beyond to address my concerns.”
+                        "The customer service I received was exceptional. The support team
+                        went above and beyond to address my concerns."
                     </blockquote>
                     <p className="mt-4 text-sm font-semibold text-gray-800 text-center">
                         Jules Winnfield

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@manojcodes77/medium-common";
 import SubmitButton from "../components/SubmitButton";
+import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [formData, setFormData] = useState<SignupInput>({
     name: "",
     email: "",
@@ -35,15 +38,16 @@ const Signup: React.FC = () => {
       });
       const data = await response.json();
       if (data.jwt) {
-        // Store the JWT in localStorage
         localStorage.setItem("authToken", data.jwt);
+        setUser({ token: data.jwt });
         navigate("/blogs");
-        alert("Login successful! JWT token stored.");
+        toast.success("Signup successful!");
       } else {
         throw new Error(data.message || "Unexpected error");
       }
     } catch (error: any) {
       setError(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -61,9 +65,6 @@ const Signup: React.FC = () => {
           </p>
 
           <form className="mt-4" onSubmit={handleSubmit}>
-            {error && (
-              <div className="mb-4 text-sm text-red-500">{error}</div>
-            )}
             {successMessage && (
               <div className="mb-4 text-sm text-green-500">
                 {successMessage}
@@ -125,8 +126,8 @@ const Signup: React.FC = () => {
         {/* Right: Quote */}
         <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-8">
           <blockquote className="text-lg italic text-gray-600 text-center">
-            “The customer service I received was exceptional. The support team
-            went above and beyond to address my concerns.”
+            "The customer service I received was exceptional. The support team
+            went above and beyond to address my concerns."
           </blockquote>
           <p className="mt-4 text-sm font-semibold text-gray-800 text-center">
             Jules Winnfield

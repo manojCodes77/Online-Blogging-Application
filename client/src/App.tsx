@@ -6,10 +6,12 @@ import Blog from './pages/Blog';
 import Publish from './pages/Publish';
 import SendOTP from './components/SendOTP';
 import FrontPage from './components/FrontPage';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<FrontPage />} >
@@ -25,7 +27,8 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+      <Toaster position="top-right" />
+    </AuthProvider>
   );
 }
 
