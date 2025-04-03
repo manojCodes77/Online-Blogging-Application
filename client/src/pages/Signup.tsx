@@ -14,7 +14,6 @@ const Signup: React.FC = () => {
     password: "",
     otp: "",
   });
-  const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +24,6 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setSuccessMessage(null);
 
     try {
@@ -46,7 +44,6 @@ const Signup: React.FC = () => {
         throw new Error(data.message || "Unexpected error");
       }
     } catch (error: any) {
-      setError(error.message);
       toast.error(error.message);
     }
   };

@@ -13,7 +13,6 @@ const Signin: React.FC = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +22,6 @@ const Signin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setSuccessMessage(null);
 
     try {
@@ -45,7 +43,6 @@ const Signin: React.FC = () => {
         throw new Error(data.message || "Unexpected error");
       }
     } catch (error: any) {
-      setError(error.message);
       toast.error(error.message);
     }
   };

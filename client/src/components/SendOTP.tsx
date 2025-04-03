@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 
 const SendOTP = () => {
     const [email, setEmail] = useState('');
-    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +13,6 @@ const SendOTP = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(null);
 
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/send-otp`, {
@@ -34,7 +32,6 @@ const SendOTP = () => {
                 throw new Error(data.message || "Unexpected error");
             }
         } catch (error: any) {
-            setError(error.message);
             toast.error(error.message);
         }
     };
