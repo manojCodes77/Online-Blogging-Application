@@ -46,7 +46,7 @@ const Header: React.FC = () => {
               <Link to="/signin" className="hover:text-black">
                 Sign In
               </Link>
-              <Link to="/signup" className="hover:text-black">
+              <Link to="/" className="hover:text-black">
                 Sign Up
               </Link>
             </>
