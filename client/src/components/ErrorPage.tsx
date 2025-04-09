@@ -26,16 +26,24 @@ const ErrorPage = () => {
                 Oops! No Posts Found
             </h1>
             <p className="text-lg text-gray-600 mb-6">
-                It seems like there are no posts available at the moment. Please check back later or return to the homepage.
+                It seems like there are no posts available at the moment. Why not be the first to share your thoughts?
             </p>
 
             {/* Call to Action */}
-            <Link
-                to="/blogs"
-                className="inline-block bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
-            >
-                Go Back Home
-            </Link>
+            <div className="flex flex-wrap gap-4 justify-center">
+                <Link
+                    to="/blogs"
+                    className="inline-block bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+                >
+                    Go Back Home
+                </Link>
+                <Link
+                    to="/my-posts/publish"
+                    className="inline-block bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
+                >
+                    Publish a Blog
+                </Link>
+            </div>
         </div>
     );
 }

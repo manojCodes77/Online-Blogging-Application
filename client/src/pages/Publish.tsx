@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../components/Modal';
+import toast from 'react-hot-toast';
 
 const Publish: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -38,15 +39,18 @@ const Publish: React.FC = () => {
       const result = await response.json();
 
       if (response.ok) {
-        alert('Post published successfully');
+        // alert('Post published successfully');
+        toast.success(result.message);
         setTitle(''); // Clear the form
         setContent('');
       } else {
-        alert(`Error: ${result.message}`);
+        // alert(`Error: ${result.message}`);
+        toast.error(result.message);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to publish the post');
+      // alert('Failed to publish the post');
+      toast.error('Failed to publish the post');
     }
   };
 
