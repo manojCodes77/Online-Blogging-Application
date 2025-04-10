@@ -4,6 +4,7 @@ import { useBlog } from '../types/Post';
 import Avatar from 'react-avatar';
 import Loader from '../components/Loader';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import { MdDelete } from 'react-icons/md';
 
 interface Author {
@@ -67,7 +68,7 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; u
     const handleDelete = async () => {
         const token = localStorage.getItem('authToken');
         if (!token) {
-            alert("No token found, unable to delete post.");
+            toast.error("No token found, unable to delete post.");
             return;
         }
 
@@ -80,7 +81,7 @@ const BlogPostView: React.FC<{ post: BlogPost; onDelete: (id: string) => void; u
             onDelete(post.id); // Notify parent to update UI
             navigate('/blogs');
         } catch (error) {
-            alert("You are not authorized to delete this post.");
+            toast.error("You are not authorized to delete this post.");
         }
     };
 
@@ -137,7 +138,7 @@ const Blog: React.FC<BlogProps> = ({unique}) => {
         const confirm = window.confirm('Are you sure you want to delete this post?');
         if (confirm) {
             await deletePost();
-            alert('Post deleted successfully');
+            toast.success('Post deleted successfully');
         }
     };
 

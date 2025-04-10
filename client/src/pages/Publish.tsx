@@ -14,7 +14,8 @@ const Publish: React.FC = () => {
     const authToken = localStorage.getItem('authToken');
 
     if (!authToken) {
-      alert('You must be logged in to publish a post');
+      toast.error('You must be logged in to publish a post');
+      redirect('/signin'); 
       return;
     }
 
