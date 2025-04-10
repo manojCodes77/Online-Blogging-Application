@@ -72,7 +72,10 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
 
   if (error) {
     return (
+      <>
       <ErrorPage />
+      <Outlet />
+      </>
     );
   }
 
