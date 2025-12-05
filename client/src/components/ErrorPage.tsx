@@ -1,46 +1,36 @@
 import { Link } from 'react-router-dom';
+import { FiFileText, FiHome, FiEdit3 } from 'react-icons/fi';
 
 const ErrorPage = () => {
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-100 text-center p-6">
-            {/* Illustration or Icon */}
-            <div className="w-48 h-48 bg-gray-200 rounded-full flex items-center justify-center mb-6">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-24 h-24 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M10 12h.01M14 12h.01M12 16h.01M10 8h.01M14 8h.01M12 4h.01"
-                    />
-                </svg>
+        <div className="min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 text-center p-6 sm:p-10">
+            {/* Illustration */}
+            <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mb-8 shadow-lg">
+                <FiFileText className="w-16 h-16 sm:w-20 sm:h-20 text-indigo-400" />
             </div>
 
             {/* Main Message */}
-            <h1 className="text-3xl font-semibold text-gray-800 mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                 Oops! No Posts Found
             </h1>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-base sm:text-lg text-gray-600 mb-8 max-w-md">
                 It seems like there are no posts available at the moment. Why not be the first to share your thoughts?
             </p>
 
             {/* Call to Action */}
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                     to="/blogs"
-                    className="inline-block bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition duration-300"
+                    className="inline-flex items-center justify-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-md hover:shadow-lg"
                 >
+                    <FiHome className="w-5 h-5" />
                     Go Back Home
                 </Link>
                 <Link
                     to="/my-posts/publish"
-                    className="inline-block bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
+                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg"
                 >
+                    <FiEdit3 className="w-5 h-5" />
                     Publish a Blog
                 </Link>
             </div>

@@ -4,14 +4,13 @@ import Footer from './Footer'
 
 const FrontPage = () => {
   return (
-    <>
-      <div className="flex flex-col min-h-screen bg-gray-100 justify-between">
-        <Header />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
+      <main className="flex-1">
         <Outlet />
-        <Footer />
-      </div>
-
-    </>
+      </main>
+      <Footer />
+    </div>
   )
 }
 

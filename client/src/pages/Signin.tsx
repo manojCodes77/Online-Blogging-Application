@@ -3,17 +3,18 @@ import { useNavigate, Link } from 'react-router-dom';
 import SubmitButton from '../components/SubmitButton';
 import { SigninInput } from '@manojcodes77/medium-common';
 import toast from 'react-hot-toast';
-import { useAuth } from '../context/AuthContext';
+import { useAppDispatch } from '../store/hooks';
+import { setCredentials } from '../store/authSlice';
+import { FiMail, FiLock } from 'react-icons/fi';
 
 const Signin: React.FC = () => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
   const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<SigninInput>({
     email: "",
     password: "",
   });
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,7 +23,6 @@ const Signin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage(null);
 
     try {
       const response = await fetch(`${BACKEND_URL}/api/v1/user/signin`, {
@@ -35,10 +35,9 @@ const Signin: React.FC = () => {
 
       const data = await response.json();
       if (data.jwt) {
-        localStorage.setItem("authToken", data.jwt);
-        setUser({ token: data.jwt });
+        dispatch(setCredentials(data.jwt));
         navigate("/blogs");
-        toast.success("Login successful!");
+        toast.success("Welcome back! 👋");
       } else {
         throw new Error(data.message || "Unexpected error");
       }
@@ -48,64 +47,83 @@ const Signin: React.FC = () => {
   };
 
   return (
-    <div className="my-auto flex items-center justify-center bg-gray-100 mx-5">
-      <div className="flex w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden justify-center">
-        {/* Left: Form */}
-        <div className="w-full md:w-1/2 p-8">
-          <h1 className="text-2xl font-bold text-gray-800">Log In to your Account</h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Link to="/" className="text-blue-500 hover:underline">
-              Signup
-            </Link>
-          </p>
-
-          <form className="mt-4" onSubmit={handleSubmit}>
-            {successMessage && (
-              <div className="mb-4 text-sm text-green-500">
-                {successMessage}
+    <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-gray-50 to-indigo-50/30">
+      <div className="w-full max-w-5xl">
+        <div className="flex flex-col lg:flex-row bg-white rounded-2xl shadow-xl overflow-hidden">
+          {/* Left: Form */}
+          <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12">
+            <div className="max-w-md mx-auto">
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
+                <p className="text-gray-500">
+                  Don't have an account?{" "}
+                  <Link to="/" className="text-indigo-600 hover:text-indigo-700 font-medium transition-colors">
+                    Sign up
+                  </Link>
+                </p>
               </div>
-            )}
 
-            <div className="mb-4">
-              <label className="block text-gray-700">Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="m@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="********"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <SubmitButton onSubmit={handleSubmit}>Sign In</SubmitButton>
-          </form>
-        </div>
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                    <FiMail className="w-4 h-4" />
+                    <span>Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="john@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                    required
+                  />
+                </div>
 
-        {/* Right: Quote */}
-        <div className="hidden md:flex w-1/2 bg-gray-100 flex-col justify-center items-center p-8">
-          <blockquote className="text-lg italic text-gray-600 text-center">
-            "The customer service I received was exceptional. The support team
-            went above and beyond to address my concerns."
-          </blockquote>
-          <p className="mt-4 text-sm font-semibold text-gray-800 text-center">
-            Jules Winnfield
-            <br />
-            CEO, Acme Inc
-          </p>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 flex items-center space-x-2">
+                    <FiLock className="w-4 h-4" />
+                    <span>Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                    required
+                  />
+                </div>
+
+                <SubmitButton onSubmit={handleSubmit}>Sign In</SubmitButton>
+              </form>
+            </div>
+          </div>
+
+          {/* Right: Quote */}
+          <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 flex-col justify-center items-center p-12 relative overflow-hidden">
+            <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
+            <div className="relative z-10 text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+              <blockquote className="text-xl text-white/90 leading-relaxed mb-6 font-light">
+                "The customer service I received was exceptional. The support team went above and beyond to address my concerns."
+              </blockquote>
+              <div className="flex items-center justify-center space-x-3">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <span className="text-white font-semibold">JW</span>
+                </div>
+                <div className="text-left">
+                  <p className="text-white font-semibold">Jules Winnfield</p>
+                  <p className="text-white/70 text-sm">CEO, Acme Inc</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

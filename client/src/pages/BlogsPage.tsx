@@ -1,71 +1,40 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import BlogCard from "../components/BlogCard";
-import { Post } from "../types/Post";
 import Loader from "../components/Loader";
 import ErrorPage from "../components/ErrorPage";
 import { Link, Outlet } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchAllPosts, fetchMyPosts, removePost } from "../store/postsSlice";
+import { FiEdit3, FiBookOpen, FiFileText } from "react-icons/fi";
 
-// Define the props type
 interface BlogsPageProps {
   unique: boolean;
 }
 
 const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
-  const [posts, setPosts] = useState<Post[]>([]); // Posts state
-  const [loading, setLoading] = useState<boolean>(true); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error state
-
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL as string;
+  const dispatch = useAppDispatch();
+  const { posts, isLoading, error } = useAppSelector((state) => state.posts);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      setError(null);
+    if (unique) {
+      dispatch(fetchMyPosts());
+    } else {
+      dispatch(fetchAllPosts());
+    }
+  }, [unique, dispatch]);
 
-      try {
-        // Get the JWT token from localStorage
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          throw new Error("No token found. Please login.");
-        }
-
-        // Conditional server URL based on the `unique` prop
-        const serverUrl = unique
-          ? `${BACKEND_URL}/api/v1/post/bulk`
-          : `${BACKEND_URL}/api/v1/post/AllPosts`;
-
-        // Make an authorized request
-        const response = await axios.get(serverUrl, {
-          headers: {
-            Authorization: token, // Include the token in the Authorization header
-          },
-        });
-
-        setPosts(response.data.posts); // Access the `posts` array in the response
-      } catch (err: any) {
-        console.error("Error fetching posts:", err);
-        setError(err.message || "Failed to fetch posts");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, [unique]); // Re-run when the `unique` prop changes
-
-  // Function to handle post deletion
   const handlePostDelete = (id: string) => {
-    // Filter out the deleted post from the state
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    dispatch(removePost(id));
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="text-center text-gray-500 mt-8 space-y-6 flex flex-col items-center">
-        <Loader />
-        <Loader />
-        <Loader />
+      <div className="flex-1 bg-gradient-to-br from-gray-50 to-indigo-50/30 py-8">
+        <div className="container mx-auto px-4 max-w-4xl space-y-6">
+          <Loader />
+          <Loader />
+          <Loader />
+        </div>
       </div>
     );
   }
@@ -73,31 +42,83 @@ const BlogsPage: React.FC<BlogsPageProps> = ({ unique }) => {
   if (error) {
     return (
       <>
-      <ErrorPage />
-      <Outlet />
+        <ErrorPage />
+        <Outlet />
       </>
     );
   }
 
   return (
-    <div className="container mx-auto p-4 flex flex-col justify-center items-center">
-      <div className="w-full flex flex-row justify-around mb-8">
-        <h1 className="text-3xl font-bold mb-4 text-center text-blue-600">Blogs</h1>
-        {unique ? (
-          <Link to="/my-posts/publish" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 mb-4">
-        Write
-          </Link>
+    <div className="flex-1 bg-gradient-to-br from-gray-50 to-indigo-50/30 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <div className="flex items-center space-x-3">
+            {unique ? (
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
+                <FiFileText className="w-6 h-6 text-white" />
+              </div>
+            ) : (
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
+                <FiBookOpen className="w-6 h-6 text-white" />
+              </div>
+            )}
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                {unique ? "My Stories" : "Explore Stories"}
+              </h1>
+              <p className="text-gray-500 text-sm">
+                {unique ? "Manage your published content" : "Discover amazing content from our community"}
+              </p>
+            </div>
+          </div>
+          
+          {unique && (
+            <Link
+              to="/my-posts/publish"
+              className="flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-200"
+            >
+              <FiEdit3 className="w-4 h-4" />
+              <span>Write Story</span>
+            </Link>
+          )}
+        </div>
+
+        {/* Posts Grid */}
+        {posts.length > 0 ? (
+          <div className="space-y-6">
+            {posts.map((post) => (
+              <BlogCard
+                key={post.id}
+                post={post}
+                onDelete={handlePostDelete}
+                unique={unique}
+              />
+            ))}
+          </div>
         ) : (
-          null
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <FiFileText className="w-10 h-10 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No stories yet</h3>
+            <p className="text-gray-500 mb-6">
+              {unique
+                ? "Start writing your first story and share it with the world!"
+                : "Be the first to share something amazing with our community!"}
+            </p>
+            {unique && (
+              <Link
+                to="/my-posts/publish"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-200"
+              >
+                <FiEdit3 className="w-4 h-4" />
+                <span>Write Your First Story</span>
+              </Link>
+            )}
+          </div>
         )}
       </div>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <BlogCard key={post.id} post={post} onDelete={handlePostDelete} unique={unique} />
-        )) // Render posts with delete functionality
-      ) : (
-        <p className="text-center text-gray-500">No blogs available.</p>
-      )}
       <Outlet />
     </div>
   );

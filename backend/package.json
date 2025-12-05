@@ -2,11 +2,14 @@
   "name": "backend",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "seed": "npx tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@manojcodes77/medium-common": "^1.0.3",
-    "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@prisma/extension-accelerate": "^3.0.1",
     "@sendgrid/mail": "^8.1.6",
@@ -15,7 +18,12 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251205.0",
+    "@prisma/adapter-pg": "^7.1.0",
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "dotenv": "^17.2.3",
+    "pg": "^8.16.3",
+    "tsx": "^4.21.0",
     "wrangler": "^4.53.0"
   }
 }

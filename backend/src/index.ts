@@ -13,7 +13,8 @@ const app = new Hono<{ Bindings: Env }>();
 app.use(
   cors({
     origin: [
-      "https://online-blogging-application.vercel.app"
+      "https://online-blogging-application.vercel.app",
+      "http://localhost:5173"
     ],
     allowMethods: ["GET", "POST","PUT","DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
