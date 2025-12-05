@@ -25,7 +25,7 @@ export const createPost = async (c: Context) => {
         }
         const authorId = c.get("authorId");
         const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
+            accelerateUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
 
         const post = await prisma.post.create({
@@ -52,7 +52,7 @@ export const deletePost = async (c: Context) => {
     const id = c.req.param('id');
     const authorId = c.get("authorId");
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
@@ -76,7 +76,7 @@ export const deletePost = async (c: Context) => {
 export const deleteMyAllPosts = async (c: Context) => {
     const authorId = c.get("authorId");
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
@@ -108,7 +108,7 @@ export const updatePost = async (c: Context) => {
         }
         const authorId = c.get("authorId");
         const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
+            accelerateUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
 
         const post = await prisma.post.update({
@@ -138,7 +138,7 @@ export const updatePost = async (c: Context) => {
 export const getPostById = async (c: Context) => {
     const id = c.req.param('id');
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
@@ -174,7 +174,7 @@ export const getAllPosts = async (c: Context) => {
     const authorId = c.get("authorId");
 
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
@@ -217,7 +217,7 @@ export const getAllPosts = async (c: Context) => {
 export const AllPosts = async (c: Context) => {
     const authorId = c.get("authorId");
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {

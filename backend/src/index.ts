@@ -20,6 +20,8 @@ app.use(
   })
 );
 
+app.get('/', (c) => c.text('Welcome to Medium Clone API'));
+
 app.route("api/v1/user/",userRouter)
 
 app.route("api/v1/post/",postRouter)

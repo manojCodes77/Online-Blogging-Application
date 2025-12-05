@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { PrismaClient } from "@prisma/client/edge"; // Use the Edge version of Prisma Client
+import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
 import { signinInput, signupInput } from "@manojcodes77/medium-common";
@@ -8,7 +8,7 @@ import { Resend } from "resend";
 export const cleanupOtps = async (c: Context) => {
     try {
         const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
+            accelerateUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
 
         const currentTime = new Date();
@@ -57,7 +57,7 @@ export const sendOtp = async (c: Context) => {
             return c.json({ message: "Email is required" }, 400);
         }
         const prisma = new PrismaClient({
-            datasourceUrl: c.env.DATABASE_URL,
+            accelerateUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate());
 
         const { email } = body;
@@ -118,7 +118,7 @@ export const signup = async (c: Context) => {
         return c.json({ message: "Invalid input" }, 400);
     }
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     // verify otp from the database
@@ -176,7 +176,7 @@ export const signin = async (c: Context) => {
         return c.json({ message: "Invalid input" }, 400);
     }
     const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
+        accelerateUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     try {
