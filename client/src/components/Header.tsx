@@ -35,10 +35,10 @@ const Header: React.FC = () => {
               className="h-10 w-auto transform group-hover:scale-105 transition-transform duration-200"
             />
             <div className="hidden sm:block">
-              <div className="text-2xl font-bold text-white tracking-wide">
+              <div className="text-2xl font-bold text-white tracking-wider" style={{ fontFamily: "'Playfair Display', serif" }}>
                 LEKHAK
               </div>
-              <div className="text-xs text-cyan-400 tracking-widest -mt-1">
+              <div className="text-xs text-cyan-400 font-semibold -mt-1" style={{ fontFamily: "'Oswald', sans-serif", letterSpacing: '0.2em' }}>
                 WHERE STORIES COME ALIVE
               </div>
             </div>

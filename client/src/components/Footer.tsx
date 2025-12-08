@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
           <div className="flex items-center space-x-3">
             <img src="/lekhak_ka_pakh.png" alt="Lekhak" className="h-8 w-auto" />
             <div className="text-sm">
-              <div className="font-semibold text-gray-900">LEKHAK</div>
+              <div className="font-bold text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>LEKHAK</div>
               <div className="text-xs text-gray-500">© {currentYear} All rights reserved.</div>
             </div>
           </div>
