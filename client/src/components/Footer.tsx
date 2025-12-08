@@ -1,5 +1,4 @@
 import React from "react";
-import { FiHeart } from "react-icons/fi";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -17,10 +16,12 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo and Copyright */}
-          <div className="flex items-center space-x-2 text-gray-500 text-sm">
-            <span>© {currentYear} Medium.</span>
-            <span className="hidden sm:inline">Made with</span>
-            <FiHeart className="w-4 h-4 text-red-500 hidden sm:inline" />
+          <div className="flex items-center space-x-3">
+            <img src="/lekhak_ka_pakh.png" alt="Lekhak" className="h-8 w-auto" />
+            <div className="text-sm">
+              <div className="font-semibold text-gray-900">LEKHAK</div>
+              <div className="text-xs text-gray-500">© {currentYear} All rights reserved.</div>
+            </div>
           </div>
 
           {/* Navigation Links */}
@@ -29,7 +30,7 @@ const Footer: React.FC = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-gray-500 hover:text-indigo-600 transition-colors duration-200"
+                className="text-sm text-gray-500 hover:text-cyan-600 transition-colors duration-200"
               >
                 {link.label}
               </a>
