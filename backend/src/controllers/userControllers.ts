@@ -165,7 +165,7 @@ export const signup = async (c: Context) => {
         if (e instanceof Error) {
             console.log(e.message);
         }
-        return c.json({ message: "User already exists" }, 411);
+        return c.json({ message: "Not Able to sign up" }, 411);
     }
 }
 
@@ -202,6 +202,6 @@ export const signin = async (c: Context) => {
         if (e instanceof Error) {
             console.log(e.message);
         }
-        return c.json({ message: "User already exists" }, 411);
+        return c.json({ message: "Not Able to sign in" }, 411);
     }
 }
