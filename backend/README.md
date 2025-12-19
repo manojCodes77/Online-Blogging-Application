@@ -19,3 +19,4 @@ npx prisma migrate dev --name Initialize the schema
 Your DB should now have the updated schema.
 
 7. To run the database server locally , we must have psql installed on our system.
+8. Now we are introducing redis cache to our application.
